@@ -1,0 +1,154 @@
+#=================================================================================
+# Auto-generated YAML configurations for TMCM-1636
+#=================================================================================
+
+# Note that it is assumed that the AP configurations don't differ between all motors/axes.
+# This means only configurations for Axis0 are placed into this YAML.
+# Also, the format of the configuration is like this:
+#    ConfigurationName: [<1> <2> <3> <4> <5>]
+# ...where:
+# <1>: 1 if configuration is supported by the product, 0 otherwise (in such case all values of <2> to <5> will just be zeroes)
+# <2>: AxisParameter type used for SAP/GAP commands
+# <3>: Default value of the configuration
+# <4>: Minimum value of the configuration
+# <5>: Maximum value of the configuration
+
+TotalMotors: 1
+
+# Descriptions for possible values of SupplyVoltage:
+# Range:: 0 to 1000 [100mV]
+SupplyVoltage: [1, 220, 480, 0, 1000]
+
+# Descriptions for possible values of TargetVelocity:
+# Range:: -200000 to 200000 [rpm]
+TargetVelocity: [1, 40, 0, -200000, 200000]
+
+# Descriptions for possible values of ActualVelocity:
+# Range:: -2147483648 to 2147483647 [rpm]
+ActualVelocity: [1, 42, 0, -2147483648, 2147483647]
+
+# Descriptions for possible values of TargetPosition:
+# Range:: -2147483648 to 2147483647 
+TargetPosition: [1, 50, 0, -2147483648, 2147483647]
+
+# Descriptions for possible values of ActualPosition:
+# Range:: -2147483648 to 2147483647 
+ActualPosition: [1, 52, 0, -2147483648, 2147483647]
+
+# Descriptions for possible values of TargetTorque:
+# Range:: -60000 to 60000 [mA]
+TargetTorque: [1, 30, 0, -60000, 60000]
+
+# Descriptions for possible values of ActualTorque:
+# Range:: -2147483648 to 2147483647 [mA]
+ActualTorque: [1, 31, 0, -2147483648, 2147483647]
+
+# Descriptions for possible values of CommutationMode:
+# 0: disabled
+# 1: open loop
+# 2: digital hall
+# 3: ABN encoder
+# 4: absolute encoder
+CommutationMode: [1, 15, 0, 0, 4]
+
+# Descriptions for possible values of CommutationModeVelocity:
+# 0: same as commutation
+# 1: ABN encoder
+# 2: absolute encoder
+CommutationModeVelocity: [1, 26, 0, 0, 2]
+
+# Descriptions for possible values of CommutationModePosition:
+# 0: same as commutation
+# 1: ABN encoder
+# 2: absolute encoder
+CommutationModePosition: [1, 25, 0, 0, 2]
+
+# Descriptions for possible values of MaxTorque:
+# Range:: 0 to 60000 [mA]
+MaxTorque: [1, 11, 4000, 0, 60000]
+
+# Descriptions for possible values of OpenLoopCurrent:
+# Range:: 0 to 60000 [mA]
+OpenLoopCurrent: [1, 12, 2000, 0, 60000]
+
+# Descriptions for possible values of Acceleration:
+# Range:: 0 to 100000 [rpm/s]
+Acceleration: [1, 44, 2000, 0, 100000]
+
+# Descriptions for possible values of MotorPolePairs:
+# Range:: 1 to 255 
+MotorPolePairs: [1, 10, 4, 1, 255]
+
+# Descriptions for possible values of PWMFrequency:
+# Range:: 25000 to 100000 [Hz]
+PWMFrequency: [1, 110, 25000, 25000, 100000]
+
+# Descriptions for possible values of HallSensorPolarity:
+# 0: standard
+# 1: inverted
+HallSensorPolarity: [1, 90, 0, 0, 1]
+
+# Descriptions for possible values of HallSensorDirection:
+# 0: standard
+# 1: inverted
+HallSensorDirection: [1, 91, 0, 0, 1]
+
+# Descriptions for possible values of HallInterpolation:
+# 0: off
+# 1: on
+HallInterpolation: [1, 92, 0, 0, 1]
+
+# Descriptions for possible values of HallSensorOffset:
+# Range:: -32768 to 32767 
+HallSensorOffset: [1, 93, 0, -32768, 32767]
+
+# Descriptions for possible values of EncoderDirection:
+# 0: standard
+# 1: inverted
+EncoderDirection: [1, 101, 0, 0, 1]
+
+# Descriptions for possible values of EncoderSteps:
+# Range:: 0 to 16777215 
+EncoderSteps: [1, 100, 4096, 0, 16777215]
+
+# Descriptions for possible values of EncoderInitMode:
+# 0: estimate offset
+# 2: use hall
+EncoderInitMode: [1, 102, 0, 0, 2]
+
+# Descriptions for possible values of TorqueP:
+# Range:: 0 to 32767 
+TorqueP: [1, 70, 500, 0, 32767]
+
+# Descriptions for possible values of TorqueI:
+# Range:: 0 to 32767 
+TorqueI: [1, 71, 500, 0, 32767]
+
+# Descriptions for possible values of VelocityP:
+# Range:: 0 to 32767 
+VelocityP: [1, 72, 100, 0, 32767]
+
+# Descriptions for possible values of VelocityI:
+# Range:: 0 to 32767 
+VelocityI: [1, 73, 100, 0, 32767]
+
+# Descriptions for possible values of PositionP:
+# Range:: 0 to 32767 
+PositionP: [1, 74, 50, 0, 32767]
+
+# Descriptions for possible values of BrakeChopperEnabled:
+# 0: Deactivate brake chopper.
+# 1: Activate brake chopper.
+BrakeChopperEnabled: [1, 140, 0, 0, 1]
+
+# Descriptions for possible values of BrakeChopperVoltage:
+# Range:: 50 to 1000 [0.1V]
+BrakeChopperVoltage: [1, 141, 1000, 50, 1000]
+
+# Descriptions for possible values of BrakeChopperHysteresis:
+# Range:: 0 to 50 [0.1V]
+BrakeChopperHysteresis: [1, 142, 0, 0, 50]
+
+# Descriptions for possible values of PositionScalerM:
+# Range:: 6 to 2147483647 
+PositionScalerM: [1, 56, 65536, 6, 2147483647]
