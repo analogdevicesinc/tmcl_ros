@@ -2,10 +2,8 @@
 | --- |
 Official ROS Driver for Trinamic Motor Controllers (TMC) that uses Trinamic Motion Control Language (TMCL) protocol. |
 
-[[_TOC_]]
-
 # Background
-- Supported TMC boards:  TMCM-1636
+- Supported TMC boards: [TMCM-1636](https://www.trinamic.com/products/modules/details/tmcm-1636/), [TMCM-1617](https://www.trinamic.com/products/modules/details/tmcm-1617/)
 - Supported communication interface and interface driver: CAN (SocketCAN)
 - Supported ROS and OS distro: Noetic (Ubuntu 20.04)
 - Supported platform: Intel x86 64-bit (amd64)
