@@ -24,8 +24,11 @@ Also the following:
 
 > :memo: _Note: Check Section 4 of [QBL4208-x-1k Datasheet](https://www.trinamic.com/fileadmin/assets/Products/Motors_Documents/QBL4208-x-1k_datasheet_Rev1.40.pdf) for motor wiring references._
 
-The image below shows the actual setup used (with labels):
+The image below shows the connection diagram of the setup (with labels):
 ![TMCM-1636 Connections](./docs/images/tmcm_1636_setup.png)
+
+The image below shows the actual setup used (for reference):
+![TMCM-1636 Actual Setup](./docs/images/tmcm_1636_actual_setup.png)
 
 # Software
 
