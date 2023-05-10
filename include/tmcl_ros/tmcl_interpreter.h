@@ -139,7 +139,8 @@ typedef enum
 /* LUT row indeces of get-able/set-able Axis Parameters */
 typedef enum
 {
-    ROW_IDX_SupplyVoltage = 0,
+    ROW_IDX_StatusFlags = 0,
+    ROW_IDX_SupplyVoltage,
     ROW_IDX_TargetVelocity,
     ROW_IDX_ActualVelocity,
     ROW_IDX_TargetPosition,
@@ -175,6 +176,7 @@ typedef enum
 
 /* LUT row strings of get-able/set-able Axis Parameters */
 std::vector<std::string> tmcl_lut_row_str = {
+    "StatusFlags",
     "SupplyVoltage",
     "TargetVelocity",
     "ActualVelocity",

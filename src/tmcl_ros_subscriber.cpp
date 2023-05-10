@@ -227,7 +227,15 @@ void cmd_abspos_0_callback(const std_msgs::Int32 msg)
     int32_t val = msg.data;
 
     //convert input(degrees) to unit
-    convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_EncoderSteps][TMCL_MOTOR_0] / (float) ANGULAR_FULL_ROTATION;
+    if (tmc_obj_sub->ap_cfg_ext[ROW_IDX_PositionScalerM][TMCL_MOTOR_0] > 0)
+    {
+        convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_PositionScalerM][TMCL_MOTOR_0] / (float) ANGULAR_FULL_ROTATION;
+    }
+    else
+    {
+        convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_EncoderSteps][TMCL_MOTOR_0] / (float) ANGULAR_FULL_ROTATION;
+    }
+    
     unit_val = val * convert_const_deg;
 
     ROS_DEBUG_STREAM("Subscriber callback " << __func__  << " entered, received: " << val << " board value: " << unit_val);
@@ -255,7 +263,15 @@ void cmd_abspos_1_callback(const std_msgs::Int32 msg)
     int32_t val = msg.data;
     
     //convert input(degrees) to unit
-    convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_EncoderSteps][TMCL_MOTOR_1] / (float) ANGULAR_FULL_ROTATION;
+    if (tmc_obj_sub->ap_cfg_ext[ROW_IDX_PositionScalerM][TMCL_MOTOR_1] > 0)
+    {
+        convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_PositionScalerM][TMCL_MOTOR_1] / (float) ANGULAR_FULL_ROTATION;
+    }
+    else
+    {
+        convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_EncoderSteps][TMCL_MOTOR_1] / (float) ANGULAR_FULL_ROTATION;
+    }
+
     unit_val = val * convert_const_deg;
 
     ROS_DEBUG_STREAM("Subscriber callback " << __func__  << " entered, received: " << val << " board value: " << unit_val);
@@ -283,7 +299,15 @@ void cmd_abspos_2_callback(const std_msgs::Int32 msg)
     int32_t val = msg.data;
     
     //convert input(degrees) to unit
-    convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_EncoderSteps][TMCL_MOTOR_2] / (float) ANGULAR_FULL_ROTATION;
+    if (tmc_obj_sub->ap_cfg_ext[ROW_IDX_PositionScalerM][TMCL_MOTOR_2] > 0)
+    {
+        convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_PositionScalerM][TMCL_MOTOR_2] / (float) ANGULAR_FULL_ROTATION;
+    }
+    else
+    {
+        convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_EncoderSteps][TMCL_MOTOR_2] / (float) ANGULAR_FULL_ROTATION;
+    }
+
     unit_val = val * convert_const_deg;
 
     ROS_DEBUG_STREAM("Subscriber callback " << __func__  << " entered, received: " << val << " board value: " << unit_val);
@@ -312,7 +336,15 @@ void cmd_relpos_0_callback(const std_msgs::Int32 msg)
     int32_t abspos_val = 0;
 
     //convert input(degrees) to unit
-    convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_EncoderSteps][TMCL_MOTOR_0] / (float) ANGULAR_FULL_ROTATION;
+    if (tmc_obj_sub->ap_cfg_ext[ROW_IDX_PositionScalerM][TMCL_MOTOR_0] > 0)
+    {
+        convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_PositionScalerM][TMCL_MOTOR_0] / (float) ANGULAR_FULL_ROTATION;
+    }
+    else
+    {
+        convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_EncoderSteps][TMCL_MOTOR_0] / (float) ANGULAR_FULL_ROTATION;
+    }
+
     unit_val = val * convert_const_deg;
 
     ROS_DEBUG_STREAM("Subscriber callback " << __func__  << " entered, received: " << val << " board value: " << unit_val);
@@ -346,7 +378,15 @@ void cmd_relpos_1_callback(const std_msgs::Int32 msg)
     int32_t abspos_val = 0;
 
     //convert input(degrees) to unit
-    convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_EncoderSteps][TMCL_MOTOR_1] / (float) ANGULAR_FULL_ROTATION;
+    if (tmc_obj_sub->ap_cfg_ext[ROW_IDX_PositionScalerM][TMCL_MOTOR_1] > 0)
+    {
+        convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_PositionScalerM][TMCL_MOTOR_1] / (float) ANGULAR_FULL_ROTATION;
+    }
+    else
+    {
+        convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_EncoderSteps][TMCL_MOTOR_1] / (float) ANGULAR_FULL_ROTATION;
+    }
+    
     unit_val = val * convert_const_deg;
 
     ROS_DEBUG_STREAM("Subscriber callback " << __func__  << " entered, received: " << val << " board value: " << unit_val);
@@ -380,7 +420,15 @@ void cmd_relpos_2_callback(const std_msgs::Int32 msg)
     int32_t abspos_val = 0;
 
     //convert input(degrees) to unit
-    convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_EncoderSteps][TMCL_MOTOR_2] / (float) ANGULAR_FULL_ROTATION;
+    if (tmc_obj_sub->ap_cfg_ext[ROW_IDX_PositionScalerM][TMCL_MOTOR_2] > 0)
+    {
+        convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_PositionScalerM][TMCL_MOTOR_2] / (float) ANGULAR_FULL_ROTATION;
+    }
+    else
+    {
+        convert_const_deg = tmc_obj_sub->ap_cfg_ext[ROW_IDX_EncoderSteps][TMCL_MOTOR_2] / (float) ANGULAR_FULL_ROTATION;
+    }
+
     unit_val = val * convert_const_deg;
 
     ROS_DEBUG_STREAM("Subscriber callback " << __func__  << " entered, received: " << val << " board value: " << unit_val);

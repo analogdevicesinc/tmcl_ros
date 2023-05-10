@@ -63,35 +63,35 @@ comm_exec_cmd_retries: 1
 # Description: tmc_info topics that will contain chosen TMC info that will be published
 # Possible values:
 # - Any tmc_info topic name
-tmc_info_topic: [/tmc_info_0, /tmc_info_1, /tmc_info]
+tmc_info_topic: [/tmc_info_0, /tmc_info, /tmc_info]
 
 # cmd_vel topics to subscribe from
 # Description: Twist topics that will be the source of target velocity to be set on the TMC
 # Possible values: 
 # - Any Twist topic name
 # Note: Only its linear.x will be used (range: -200000 to 200000)
-tmc_cmd_vel_topic: [/cmd_vel_0, /cmd_vel_1, /cmd_vel]
+tmc_cmd_vel_topic: [/cmd_vel_0, /cmd_vel, /cmd_vel]
 
 # cmd_pos topics to subscribe from
 # Description: Int32 topics that will be the source of target position to be set on the TMC
 # Possible values: 
 # - Any Int32 topic name (range: -2147483648 to -2147483647)
-tmc_cmd_abspos_topic: [/cmd_abspos_0, /cmd_abspos_1, /cmd_abspos]
+tmc_cmd_abspos_topic: [/cmd_abspos_0, /cmd_abspos, /cmd_abspos]
 
 # cmd_pos topics to subscribe from
 # Description: Int32 topics that will be the source of target position to be set on the TMC
 # Possible values: 
 # - Any Int32 topic name (range: -2147483648 to -2147483647)
-tmc_cmd_relpos_topic: [/cmd_relpos_0, /cmd_relpos_1, /cmd_relpos]
+tmc_cmd_relpos_topic: [/cmd_relpos_0, /cmd_relpos, /cmd_relpos]
 
 # cmd_trq topics to subscribe from
 # Description: Int32 topics that will be the source of target torque to be set on the TMC
 # Possible values: 
 # - Any Int32 topic name (range: -60000 to 60000 mA)
-tmc_cmd_trq_topic: [/cmd_trq_0, /cmd_trq_1, /cmd_trq]
+tmc_cmd_trq_topic: [/cmd_trq_0, /cmd_trq, /cmd_trq]
 
 # Wheel diameter attached to the motor (in  meters)
-# Description: Wheel diameter that is attached on the motor shaft directly. This is to convert linear values to rpm
+# Description: Wheel diameter that is attached on the motor. This is to convert linear values to rpm
 # Note: If wheel diameter is 0, cmd_vel is equal to rpm
 wheel_diameter: 0.25
 
@@ -100,27 +100,27 @@ wheel_diameter: 0.25
 # Possible values:
 # - 0: Not used
 # - 1: Active
-en_motors: [1, 1, 0]
+en_motors: [1, 0, 0]
 
 # Publish TMC information
 # Decription: Enables/disables publishing of TMC information
 # Possible values:
 # - true: Enabled
 # - false: Disabled
-en_pub_tmc_info: [true, true, false] 
+en_pub_tmc_info: [true, false, false] 
 
 # Publish rate of TMC information
 # Decription: Publish rate (hertz) of TMC information
-# Possible values: 0 - 50
-pub_rate_tmc_info: 1
+# Possible values: 10 - 100
+pub_rate_tmc_info: 10
 
 ########## TMC Information
 
 # Enable/Disable axis parameters that the user can optionally publish every publish rate as long as en_pub_tmc_info is true
 
-pub_actual_vel: [true, true, false] 
-pub_actual_trq: [true, true, false]
-pub_actual_pos: [true, true, false]
+pub_actual_vel: [true, false, false] 
+pub_actual_trq: [true, false, false]
+pub_actual_pos: [true, false, false]
 
 ##########################################################
 ##########################################################
@@ -137,7 +137,7 @@ pub_actual_pos: [true, true, false]
 # Possible values:
 # - true:  Follow all the motor configuration as-is (EEPROM values set as part of TMC firmware or as set in TMCL-IDE)
 # - false:  Have user set all motor configurations in this YAML (below)
-FollowEepromConfig: true
+FollowEepromConfig: false
 
 ########## Sensor Selection Settings
 
@@ -197,11 +197,11 @@ HallSensorOffset_Ext: [0, 0, 0]
 
 # Encoder direction
 # Description: Encoder direction in a way that ROR increases position counter
-EncoderDirection_Ext: [1, 0, 0]
+EncoderDirection_Ext: [0, 0, 0]
 
 # Encoder steps
 # Description: Encoder steps per full motor rotation
-EncoderSteps_Ext: [4096, 0, 0]
+EncoderSteps_Ext: [16384, 0, 0]
 
 # Encoder init mode
 # Description: Encoder init mode
@@ -211,7 +211,7 @@ EncoderInitMode_Ext: [0, 0, 0]
 
 # Torque P
 # Description: P parameter for current PID regulator
-TorqueP_Ext: [300, 0, 0]
+TorqueP_Ext: [1500, 0, 0]
 
 # Torque I
 # Description: I parameter for current PID regulator
@@ -219,15 +219,15 @@ TorqueI_Ext: [500, 0, 0]
 
 # Velocity P
 # Description: P parameter for velocity PID regulator
-VelocityP_Ext: [400, 0, 0]
+VelocityP_Ext: [131, 0, 0]
 
 # Velocity I
 # Description: I parameter for velocity PID regulator
-VelocityI_Ext: [100, 0, 0]
+VelocityI_Ext: [49, 0, 0]
 
 # Position P
 # Description: P parameter for position PID regulator
-PositionP_Ext: [10, 0, 0]
+PositionP_Ext: [11, 0, 0]
 
 ########## Brake Chopper Settings
 

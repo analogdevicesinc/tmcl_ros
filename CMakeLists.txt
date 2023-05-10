@@ -9,6 +9,7 @@ project(tmcl_ros)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  geometry_msgs
   message_generation
   std_msgs
 )

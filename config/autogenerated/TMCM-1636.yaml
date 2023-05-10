@@ -15,6 +15,12 @@
 
 TotalMotors: 1
 
+# Descriptions for possible values of StatusFlags:
+# Size:: 32 [bit]
+StatusFlags: [1, 156, 0, 0, 0]
+StatusFlagsRegName: [OVERCURRENT, UNDERVOLTAGE, OVERVOLTAGE, OVERTEMPERATURE, MOTORHALTED, HALLERROR, DRIVER_ERROR, INIT_ERROR, STOP_MODE, VELOCITY_MODE, POSITION_MODE, TORQUE_MODE, POSITION_END, MODULE_INITIALIZED, IIT_EXCEEDED_1, IIT_EXCEEDED_2]
+StatusFlagsRegShift: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17]
+
 # Descriptions for possible values of SupplyVoltage:
 # Range:: 0 to 1000 [100mV]
 SupplyVoltage: [1, 220, 480, 0, 1000]

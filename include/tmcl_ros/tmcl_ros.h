@@ -17,7 +17,7 @@
 #define TIMEOUT_MS_DEFAULT 10
 #define EXEC_CMD_RETRIES_MAX 3
 #define EXEC_CMD_RETRIES_DEFAULT 1
-#define PUB_RATE_MAX 50
+#define PUB_RATE_MAX 100
 #define RATE_20KBPS 20000
 #define RATE_50KBPS 50000
 #define RATE_100KBPS 100000
@@ -96,6 +96,10 @@ class TmclROS
         bool param_follow_eeprom_cfg;
         std::vector<std::vector<int>> ap_cfg;
         std::vector<std::vector<int>> ap_cfg_ext;
+
+        /* Separate vectors for registers of Statusflags */
+        std::vector<std::string> param_status_flags_reg_name;
+        std::vector<int> param_status_flags_reg_shift;
 
 	/* Handle for TmclInterpreter */
         TmclInterpreter *tmcl;

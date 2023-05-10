@@ -112,6 +112,17 @@ bool TmclROS::getInfo()
          b_result = false;
        }
 
+       /* Get status flags if it will be published as part of TMC info */
+       if (b_result && exec_tmcl_cmd(TMCL_CMD_GAP, ap_cfg[ROW_IDX_StatusFlags][COL_IDX_AP], (tmcl_motor_t) i, &val))
+       {
+         ap_cfg_ext[ROW_IDX_StatusFlags][i] = val;
+         ROS_DEBUG_STREAM("[" << __func__ << "] Able to get status flags");
+       }
+       else
+       {
+         b_result = false;
+       }
+
       /* Get actual velocity if it will be published as part of TMC info */
       if(b_result && ap_cfg_ext[ROW_IDX_CommutationMode][i] > 0 && param_pub_actual_vel[i])
       {
@@ -524,14 +535,14 @@ bool TmclROS::validate_params(ros::NodeHandle nh)
   const std::string s_pub_rate_tmc_info = s_node_name + "/pub_rate_tmc_info";
   if(!nh.getParam(s_pub_rate_tmc_info, param_pub_rate_tmc_info))
   {
-    param_pub_rate_tmc_info = 1;
+    param_pub_rate_tmc_info = 10;
     ROS_WARN_STREAM("Failed to get pub_rate_tmc_info, setting to default value: " << param_pub_rate_tmc_info);
   }
   else
   {
-    if (param_pub_rate_tmc_info < 0 || param_pub_rate_tmc_info > PUB_RATE_MAX)
+    if (param_pub_rate_tmc_info < 10 || param_pub_rate_tmc_info > PUB_RATE_MAX)
     {
-      param_pub_rate_tmc_info = 1;
+      param_pub_rate_tmc_info = 10;
       ROS_WARN_STREAM("Set value to pub_rate_tmc_info is out of range, setting pub_rate_tmc_info value to default: " << param_pub_rate_tmc_info);
     }
   }
@@ -566,6 +577,45 @@ bool TmclROS::validate_params(ros::NodeHandle nh)
   ////////////////////////////////
   // Non-user-configurable ones 
   ////////////////////////////////
+
+  /* StatusFlags checks */
+  const std::string s_status_flags = s_node_name + "/StatusFlags";
+  if(nh.getParam(s_status_flags, ap_cfg[ROW_IDX_StatusFlags]))
+  {
+    ROS_INFO_STREAM("Succeeded to get StatusFlags.");
+  }
+  else
+  {
+    ROS_ERROR_STREAM("Failed to get StatusFlags. Double check your YAMLs. Exiting!");
+    return false;
+  }
+  const std::string s_status_flags_reg_name = s_node_name + "/StatusFlagsRegName";
+  if(nh.getParam(s_status_flags_reg_name, param_status_flags_reg_name))
+  {
+    ROS_INFO_STREAM("Succeeded to get StatusFlagsRegName.");
+  }
+  else
+  {
+    ROS_ERROR_STREAM("Failed to get StatusFlagsRegName. Double check your YAMLs. Exiting!");
+    return false;
+  }
+  const std::string s_status_flags_reg_shift = s_node_name + "/StatusFlagsRegShift";
+  if(nh.getParam(s_status_flags_reg_shift, param_status_flags_reg_shift))
+  {
+    ROS_INFO_STREAM("Succeeded to get StatusFlagsRegShift.");
+  }
+  else
+  {
+    ROS_ERROR_STREAM("Failed to get StatusFlagsRegShift. Double check your YAMLs. Exiting!");
+    return false;
+  }
+
+  /* Both StatusFlagsRegName and StatusFlagsRegShift should have the same size of vector*/
+  if (param_status_flags_reg_name.size() != param_status_flags_reg_shift.size())
+  {
+    ROS_ERROR_STREAM("StatusFlagsRegName and StatusFlagsRegShift have different size of vector. Double check your YAMLs. Exiting!");
+    return false;
+  }
 
   /* SupplyVoltage checks */
   const std::string s_SupplyVoltage = s_node_name + "/SupplyVoltage";
@@ -736,7 +786,7 @@ bool TmclROS::validate_configurable_axis_params(ros::NodeHandle nh)
   }
 
   // Validate TMC configurations
-  for(index = 7; index < ROW_IDX_MAX; index++) // Configurable setting starts at 7th ROW_IDX_*
+  for(index = 8; index < ROW_IDX_MAX; index++) // Configurable setting starts at 7th ROW_IDX_*
   {
     if(!validate_ap_cfg(nh, tmcl_lut_row_str[index], index))
     {
