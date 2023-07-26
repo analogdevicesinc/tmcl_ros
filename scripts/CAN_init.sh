@@ -50,15 +50,41 @@ else
 
   if [ "$arg_pass" = true ]
   then
-    # set can interface down to avoid multiple bring up on a single can interface
-    pkexec ip link set can$comm_interface down
-    pkexec ip link set can$comm_interface up type can bitrate $bitrate
+    network_file="99-can.network"
+    echo "Creating $network_file ..."
+    rm -f $network_file
+    touch $network_file
+
+    echo "[Match]" >> $network_file
+    echo "Name=can$comm_interface" >> $network_file
+    echo "[CAN]" >> $network_file
+    echo "BitRate=$bitrate" >> $network_file
+
+    echo "Moving $network_file to /etc/systemd/network ..."
+    cp $network_file /etc/systemd/network
+
+    echo "Stop systemd-networkd ..."
+    systemctl stop systemd-networkd
+    sleep 5
+
+    echo "Enabling systemd-networkd ..."
+    systemctl enable systemd-networkd
+    sleep 5
+
+    echo "Restarting systemd-networkd ..."
+    systemctl restart systemd-networkd
+    sleep 5
+
     result=$?
+    rm $network_file
   fi
 
   if [ "$result" -eq 0 ]
   then
-    echo "Initialized! You can now run node or can_interface scripts"
+    echo ""
+    echo "============================================================"
+    echo "Done."
+    echo "can$comm_interface will automatically be brought UP on boot"
   fi
   
 fi

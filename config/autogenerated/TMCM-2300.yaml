@@ -1,0 +1,80 @@
+#=================================================================================
+# Auto-generated YAML configurations for TMC2300-MOTOR-EVAL
+#=================================================================================
+
+# Note that it is assumed that the AP configurations don't differ between all motors/axes.
+# This means only configurations for Axis0 are placed into this YAML.
+
+# Available Axis Parameters
+AP_name: [TargetPosition,
+          ActualPosition,
+          TargetVelocity,
+          ActualVelocity,
+          MaxVelocity,
+          MaxAcceleration,
+          MaxCurrent,
+          StandbyCurrent,
+          PositionReachedFlag,
+          MeasuredSpeed,
+          VActual,
+          MicrostepResolution,
+          Intpol,
+          ChopperBlankTime,
+          SEIMIN,
+          SECDS,
+          smartEnergyHysteresis,
+          SECUS,
+          smartEnergyHysteresisStart,
+          SG2Threshold,
+          smartEnergyActualCurrent,
+          smartEnergyStallVelocity,
+          smartEnergyThresholdSpeed,
+          PWMGrad,
+          PWMFrequency,
+          PWMAutoscale,
+          FreewheelingMode,
+          LoadValue,
+          SupplyVoltage]
+
+AP_type: [0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          29,
+          100,
+          140,
+          141,
+          162,
+          168,
+          169,
+          170,
+          171,
+          172,
+          174,
+          180,
+          181,
+          182,
+          187,
+          191,
+          192,
+          204,
+          206,
+          220]
+
+# Available Global Parameters
+GP_name: [serial baud rate,
+          auto start mode,
+          application status,
+          program counter,
+          tick timer]
+
+GP_type: [65,
+          77,
+          128,
+          130,
+          132]

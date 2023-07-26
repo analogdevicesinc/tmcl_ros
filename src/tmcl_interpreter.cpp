@@ -9,130 +9,202 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /* Constructor */
-TmclInterpreter::TmclInterpreter()
+TmclInterpreter::TmclInterpreter(uint16_t timeout_ms, uint8_t comm_exec_cmd_retries, std::vector<std::string> param_ap_name, std::vector<int> param_ap_type) :
+timeout_ms(timeout_ms), 
+comm_exec_cmd_retries(comm_exec_cmd_retries), 
+param_ap_name(param_ap_name), 
+param_ap_type(param_ap_type)
 {
-    tmcl_interface = TMCL_INTERFACE_CAN;
+  ROS_DEBUG_STREAM("[TmclInterpreter::" <<  __func__ << "] called");
 
-    if(tmcl_interface == TMCL_INTERFACE_CAN)
-    {
-        tmcl_cfg.socket_can = nullptr;
-        tmcl_cfg.interface_name = "can0";
-        tmcl_cfg.bit_rate = 1000000;
-        tmcl_cfg.tx_id = 1;
-        tmcl_cfg.rx_id = 2;
-    }
-    interface_enabled = false;
-    timeout_ms = 0;
+  tmcl_interface = TMCL_INTERFACE_CAN;
+
+  if(tmcl_interface == TMCL_INTERFACE_CAN)
+  {
+    tmcl_cfg.p_socket_can = nullptr;
+    tmcl_cfg.interface_name = "can0";
+    tmcl_cfg.tx_id = 1;
+    tmcl_cfg.rx_id = 2;
+  }
+  interface_enabled = false;
+  b_retries_exceeded = false;
 }
 
 /* Destructor */
 TmclInterpreter::~TmclInterpreter()
 {
-    if(tmcl_interface == TMCL_INTERFACE_CAN)
-    {
-        tmcl_cfg.interface_name = "";
-        tmcl_cfg.bit_rate = 0;
-        tmcl_cfg.tx_id = 0;
-        tmcl_cfg.rx_id = 0;
-    }
-    interface_enabled = false;
-    timeout_ms = 0;
+  ROS_DEBUG_STREAM("[TmclInterpreter::" <<  __func__ << "] called");
+
+  if(tmcl_interface == TMCL_INTERFACE_CAN)
+  {
+    tmcl_cfg.interface_name = "";
+    tmcl_cfg.tx_id = 0;
+    tmcl_cfg.rx_id = 0;
+  }
+  interface_enabled = false;
 }
 
 /* Reset interface */
-bool TmclInterpreter::reset_interface()
+bool TmclInterpreter::resetInterface()
 {
-    bool b_result = false;
+  ROS_INFO_STREAM("[TmclInterpreter::" <<  __func__ << "] called");
 
-    if(tmcl_interface == TMCL_INTERFACE_CAN)
-    {
-        tmcl_cfg.socket_can = new SocketCAN();
-        if(tmcl_cfg.socket_can->initialize(tmcl_cfg.interface_name.c_str(), tmcl_cfg.bit_rate))
-        {
-            ROS_INFO_STREAM("[" << __func__ <<"] called");
-	    interface_enabled = true;
-            b_result = true;
-        }
-    }
-    else
-    {
-        ROS_INFO_STREAM("[" << __func__ <<"] Interface not yet supported");
-    }
+  bool b_result = false;
 
-    return b_result;
+  if(tmcl_interface == TMCL_INTERFACE_CAN)
+  {
+    tmcl_cfg.p_socket_can = new SocketCAN();
+
+    if(tmcl_cfg.p_socket_can->initialize(tmcl_cfg.interface_name.c_str()))
+    {
+      ROS_INFO_STREAM("[" << __func__ <<"] called");
+      interface_enabled = true;
+      b_result = true;
+    }
+  }
+  else
+  {
+    ROS_ERROR_STREAM("[" << __func__ <<"] Interface not yet supported");
+  }
+
+  return b_result;
 }
 
-/* Execute command (Direct mode) */
-bool TmclInterpreter::execute_cmd(tmcl_msg_t *msg)
+/* Execute a TMCL command within the program */
+bool TmclInterpreter::executeCmd(tmcl_cmd_t cmd, uint8_t type, uint8_t motor, int32_t *val)
 {
-    bool b_result = false;
+  ROS_DEBUG_STREAM("[" <<  __func__ << "] called");
+  
+  bool b_result = false;
+  uint8_t n_retries = comm_exec_cmd_retries;
+  uint8_t rx_msg[TMCL_MSG_SZ] = {0};
+  uint32_t rx_msg_id = 0;
+  uint8_t rx_msg_sz = 0;
 
-    uint8_t rx_msg[TMCL_MSG_SZ] = { 0 };
-    uint32_t rx_msg_id = 0;
-    uint8_t rx_msg_sz = 0;
+  tmcl_msg_t tmcl_msg;
 
-    uint8_t tx_msg[TMCL_MSG_SZ] = { msg->cmd, msg->type, msg->motor, msg->value[0], msg->value[1], msg->value[2], msg->value[3] };
-
-    if(interface_enabled)
+  if(interface_enabled)
+  {
+    if(tmcl_interface == TMCL_INTERFACE_CAN)
     {
-        if(tmcl_interface == TMCL_INTERFACE_CAN)
+      tmcl_msg.tx_id = tmcl_cfg.tx_id;
+      tmcl_msg.rx_id = tmcl_cfg.rx_id;
+      tmcl_msg.cmd = cmd;
+      tmcl_msg.type = type;
+      tmcl_msg.motor = motor;
+      tmcl_msg.value[0] = (*val & 0xFF000000) >> 24;
+      tmcl_msg.value[1] = (*val & 0x00FF0000) >> 16;
+      tmcl_msg.value[2] = (*val & 0x0000FF00) >> 8;
+      tmcl_msg.value[3] = (*val & 0x000000FF);
+      // Setting cmd, type, motor, value is always needed every call to execute_cmd()
+      uint8_t tx_msg[TMCL_MSG_SZ] = {tmcl_msg.cmd, tmcl_msg.type, tmcl_msg.motor, tmcl_msg.value[0], tmcl_msg.value[1], tmcl_msg.value[2], tmcl_msg.value[3]};
+      auto start_time = std::chrono::system_clock::now();
+      auto end_time = start_time;
+
+      while (0 < n_retries)
+      {
+        ROS_DEBUG("[%s] [T%d] before execute_cmd(), value=%d sending [0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x]", __func__, n_retries,
+                *val, tmcl_msg.tx_id, tmcl_msg.cmd, tmcl_msg.type, tmcl_msg.motor, tmcl_msg.value[0], tmcl_msg.value[1], tmcl_msg.value[2], tmcl_msg.value[3]);
+
+        /* Send TMCL command */
+        if(tmcl_cfg.p_socket_can->writeFrame(tmcl_msg.tx_id, tx_msg, TMCL_MSG_SZ))
         {
-            /* Send TMCL command */
-            if(tmcl_cfg.socket_can->writeFrame(msg->tx_id, tx_msg, TMCL_MSG_SZ))
+          while(timeout_ms > std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count())
+          {
+            if(tmcl_cfg.p_socket_can->framesAvailable() && tmcl_cfg.p_socket_can->readFrame(&rx_msg_id, rx_msg, &rx_msg_sz))
             {
-                /* Wait for the reply for the TMCL command */
-                auto start_time = std::chrono::system_clock::now();
-                auto end_time = start_time;
+              /* A response for the TMCL command is received */
+              if((rx_msg_id == tmcl_msg.rx_id) && 
+                (rx_msg_sz == TMCL_MSG_SZ) &&
+                (rx_msg[0] == tmcl_msg.tx_id) &&
+                (rx_msg[2] == tmcl_msg.cmd))
+              {
+                tmcl_msg.sts = (tmcl_sts_t)rx_msg[1];
+                tmcl_msg.value[0] = rx_msg[3];
+                tmcl_msg.value[1] = rx_msg[4];
+                tmcl_msg.value[2] = rx_msg[5];
+                tmcl_msg.value[3] = rx_msg[6];
 
-                while(std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count() < timeout_ms)
-                {
-                    if(tmcl_cfg.socket_can->framesAvailable() && tmcl_cfg.socket_can->readFrame(&rx_msg_id, rx_msg, &rx_msg_sz))
-                    {
-                        /* A response for the TMCL command is received */
-                        if((rx_msg_id == msg->rx_id) && 
-                           (rx_msg_sz == TMCL_MSG_SZ) &&
-                           (rx_msg[0] == msg->tx_id) &&
-                           (rx_msg[2] == msg->cmd))
-                        {
-                            msg->sts = (tmcl_sts_t) rx_msg[1];
-                            msg->value[0] = rx_msg[3];
-                            msg->value[1] = rx_msg[4];
-                            msg->value[2] = rx_msg[5];
-                            msg->value[3] = rx_msg[6];
-                            b_result = true;
-	                    break;
-                        }
-                        else
-                        {
-                            ROS_INFO_STREAM("\nDifferent rx_id received"); 
-                        }
-                    }
-
-                    end_time = std::chrono::system_clock::now();
-                }
+                //* - Rx: | [[Reply  Address]] | <Module Address> | <Status> | <Command> | <Value> | <Value> | <Value> | <Value> | [[Checksum]]
+                ROS_DEBUG("\n[%s] [T%d] execute_cmd() success, received [0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x]\n", __func__, n_retries,
+                tmcl_msg.tx_id, tmcl_msg.sts, tmcl_msg.cmd, tmcl_msg.value[0], tmcl_msg.value[1], tmcl_msg.value[2], tmcl_msg.value[3]);
+                *val = (tmcl_msg.value[0] << 24) + (tmcl_msg.value[1] << 16) + (tmcl_msg.value[2] << 8) + tmcl_msg.value[3];
+                b_result = true;
+                break;
+              }
             }
+            end_time = std::chrono::system_clock::now();
+          }
+        }
+        
+        if(!b_result)
+        {
+          n_retries--;
         }
         else
         {
-            ROS_WARN_STREAM("[" << __func__ <<"] Interface not yet supported");
+          break;
         }
-    }
+      }
 
-    return b_result;
+      if(n_retries == 0)
+      {
+        b_retries_exceeded = true;
+        ROS_ERROR_STREAM("[" << __func__ << "] Retries exceeded");
+      }
+    }
+    else
+    {
+      ROS_ERROR_STREAM("[" << __func__ << "] Interface not yet supported");
+    }
+  }
+
+  return b_result;
+}
+
+bool TmclInterpreter::executeCmd(tmcl_cmd_t cmd, std::string type, uint8_t motor, int32_t *val)
+{
+  bool b_result = false;
+  uint8_t int_type = 0;
+  uint8_t index = 0;
+
+  auto iterator = std::find(param_ap_name.begin(), param_ap_name.end(), type);
+    
+  if(iterator != param_ap_name.end()) 
+  {
+    index = std::distance(param_ap_name.begin(), iterator);
+    int_type = param_ap_type[index];
+    b_result = executeCmd(cmd, int_type, motor, val);
+  } 
+  else 
+  {
+    ROS_DEBUG_STREAM("[" << __func__ << "] Instruction Type: " << type << " not found");
+  }
+
+  return b_result;
 }
 
 /* Shutdown interface */
-bool TmclInterpreter::shutdown_interface()
+bool TmclInterpreter::shutdownInterface()
 {
-    bool b_result = false;
+  bool b_result = false;
+  
+  ROS_INFO_STREAM("[TmclInterpreter::" << __func__ << "] called");
 
-    if(tmcl_interface == TMCL_INTERFACE_CAN)
-    {
-        tmcl_cfg.socket_can->deinitialize();
-        delete tmcl_cfg.socket_can;
-        tmcl_cfg.socket_can = nullptr;
-        interface_enabled = false;
-        b_result = true;
-	}
-    return b_result;
+  if(tmcl_interface == TMCL_INTERFACE_CAN)
+  {
+    tmcl_cfg.p_socket_can->deinitialize();
+    delete tmcl_cfg.p_socket_can;
+    tmcl_cfg.p_socket_can = nullptr;
+    interface_enabled = false;
+    b_result = true;
+  }
+  
+  return b_result;
+}
+
+/* Getter b_retries_exceeded variable */
+bool TmclInterpreter::getRetriesExceededStatus()
+{
+  return b_retries_exceeded;
 }

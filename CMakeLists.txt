@@ -51,13 +51,15 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
    FILES
    TmcInfo.msg
+   TmcParam.msg
 )
 
 ## Generate services in the 'srv' folder
- add_service_files(
+add_service_files(
    FILES
-   TmcSrv.srv
- )
+   TmcCustomCmd.srv
+   TmcGapGgpAll.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -103,7 +105,7 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES tmcl_ros tmcl_interpreter tmcl_ros_publisher tmcl_ros_subscriber tmcl_ros_service socket_can_wrapper
+  LIBRARIES tmcl_ros tmcl_interpreter socket_can_wrapper tmcl_motor tmcl_bldc_motor tmcl_stepper_motor 
   CATKIN_DEPENDS roscpp message_runtime std_msgs
 #  DEPENDS system_lib
 )
@@ -126,13 +128,14 @@ include_directories(
 add_library(socket_can_wrapper src/socket_can_wrapper.cpp)
 add_library(tmcl_interpreter src/tmcl_interpreter.cpp)
 add_library(tmcl_ros src/tmcl_ros.cpp)
-add_library(tmcl_ros_subscriber src/tmcl_ros_subscriber.cpp)
-add_library(tmcl_ros_publisher src/tmcl_ros_publisher.cpp)
-add_library(tmcl_ros_service src/tmcl_ros_service.cpp)
+add_library(tmcl_motor src/tmcl_motor.cpp)
+add_library(tmcl_bldc_motor src/tmcl_bldc_motor.cpp)
+add_library(tmcl_stepper_motor src/tmcl_stepper_motor.cpp)
 
 add_dependencies(tmcl_ros tmcl_ros_generate_messages_cpp)
-add_dependencies(tmcl_ros_publisher tmcl_ros_generate_messages_cpp)
-add_dependencies(tmcl_ros_service tmcl_ros_generate_messages_cpp)
+add_dependencies(tmcl_motor tmcl_ros_generate_messages_cpp)
+add_dependencies(tmcl_bldc_motor tmcl_ros_generate_messages_cpp)
+add_dependencies(tmcl_stepper_motor tmcl_ros_generate_messages_cpp)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -157,7 +160,11 @@ add_executable(${PROJECT_NAME}_node src/tmcl_ros_node.cpp)
 ## Specify libraries to link a library or executable target against
 target_link_libraries(tmcl_interpreter socket_can_wrapper)
 target_link_libraries(tmcl_ros tmcl_interpreter)
-target_link_libraries(tmcl_ros_node tmcl_ros tmcl_ros_subscriber tmcl_ros_publisher tmcl_ros_service ${catkin_LIBRARIES})
+target_link_libraries(tmcl_ros tmcl_motor)
+target_link_libraries(tmcl_interpreter tmcl_motor)
+target_link_libraries(tmcl_motor tmcl_bldc_motor)
+target_link_libraries(tmcl_motor tmcl_stepper_motor)
+target_link_libraries(tmcl_ros_node tmcl_ros ${catkin_LIBRARIES})
 add_dependencies(tmcl_ros_node tmcl_ros_generate_messages_cpp)
 
 #############
