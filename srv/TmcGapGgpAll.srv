@@ -1,4 +1,4 @@
-uint8 motor_num
+uint8 motor_number
 ---
 TmcParam[] output
 bool result

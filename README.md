@@ -164,13 +164,13 @@ $ roslaunch tmcl_ros tmcm_1636.launch
 
 ## tmcl_ros_node
 
-> :memo: _Note: For those with <motor_num> in the topic names, these are ideally the motor number. For example, if there are 2 motors used, there should be two published topics for tmc_info, specifically /tmc_info_0 for motor 0 and then /tmc_info_1 for motor 1._
+> :memo: _Note: For those with <motor_number> in the topic names, these are ideally the motor number. For example, if there are 2 motors used, there should be two published topics for tmc_info, specifically /tmc_info_0 for motor 0 and then /tmc_info_1 for motor 1._
 
 ### Published topics
 
 These are the default topic names, topic names can be modified as a ROS parameter.
 
-+ **/tmc_info_<motor_num>**
++ **/tmc_info_<motor_number>**
     - Data containing:
       + (1) board voltage (V)
       + (2) statusflag value (only for boards with StatusFlags AP, else, value is set to 0)
@@ -182,13 +182,13 @@ These are the default topic names, topic names can be modified as a ROS paramete
 
 ### Subscriber topics
 
-+ **/cmd_vel_<motor_num>** 
++ **/cmd_vel_<motor_number>** 
     - Velocity command (rpm or m/s)
-+ **/cmd_abspos_<motor_num>** 
++ **/cmd_abspos_<motor_number>** 
     - Absolute position command (degree angle)
-+ **/cmd_relpos_<motor_num>** 
++ **/cmd_relpos_<motor_number>** 
     - Relative position command (degree angle)
-+ **/cmd_trq_<motor_num>** 
++ **/cmd_trq_<motor_number>** 
     - Torque command (mA)
 
 ### Advertised services

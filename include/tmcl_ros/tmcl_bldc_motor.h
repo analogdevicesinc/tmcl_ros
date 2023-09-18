@@ -19,32 +19,34 @@
 
 class BLDCMotor : public Motor
 {
-  public:
-    /* Constructor */
-    BLDCMotor(ros::NodeHandle* p_nh, TmclInterpreter *p_tmcl_int, uint8_t motor_num);
+public:
+  /* Constructor */
+  BLDCMotor(ros::NodeHandle* p_nh, TmclInterpreter *p_tmcl_interpreter, 
+    uint16_t module_number, uint8_t motor_number);
 
-    /* Destructor */
-    ~BLDCMotor() override;
+  /* Destructor */
+  ~BLDCMotor() override;
 
-    void init() override;
+  /* Initialize BLDC Motor */
+  void init() override;
 
-  private:
-    /* Publisher */
-    void rosPublishTmcInfo(const ros::TimerEvent& event) override;
+private:
+  /* Publisher */
+  void rosPublishTmcInfo(const ros::TimerEvent& event) override;
 
-    /* Subscriber */
-    void initSubscriber() override;
-    void cmdVelCallback(const geometry_msgs::Twist& msg) override;
-    void cmdAbsPosCallback(const std_msgs::Int32 msg) override;
-    void cmdRelPosCallback(const std_msgs::Int32 msg) override;
+  /* Subscriber */
+  void initSubscriber() override;
+  void cmdVelCallback(const geometry_msgs::Twist& msg) override;
+  void cmdAbsPosCallback(const std_msgs::Int32 msg) override;
+  void cmdRelPosCallback(const std_msgs::Int32 msg) override;
 
-    int32_t position_scaler;
-    int32_t encoder_steps;
-    bool b_statusflags_register_available;
-    std::vector<std::string> param_statusflags_reg_name;
-    std::vector<int> param_statusflags_reg_shift;
+  int32_t position_scaler_;
+  int32_t encoder_steps_;
+  bool b_statusflags_register_available_;
+  std::vector<std::string> param_statusflags_reg_name_;
+  std::vector<int> param_statusflags_reg_shift_;
 
-    bldc_comm_mode_t comm_mode;
+  bldc_comm_mode_t comm_mode_;
 };
 
 #endif // TMCL_BLDC_MOTOR_H

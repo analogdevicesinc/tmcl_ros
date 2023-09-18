@@ -24,8 +24,8 @@
   *  - Reply Address: CAN-ID of the Receiver
   *  - Command, Type, Motor, Status can be either of the values enumerated below
   **/
-#define TMCL_MSG_SZ        7
-#define TMCL_MSG_VALUE_SZ  4
+const uint8_t TMCL_MSG_SZ = 7;
+const uint8_t TMCL_MSG_VALUE_SZ = 4;
 
 /*******************************************************************************/
 /*                        Interface related settings                           */
@@ -97,39 +97,40 @@ typedef struct
 /* Class definition for TMCL Interpreter */
 class TmclInterpreter 
 {
-  public:
-    /* Constructor */
-    TmclInterpreter(uint16_t timeout_ms, uint8_t comm_exec_cmd_retries, std::vector<std::string> param_ap_name, std::vector<int> param_ap_type);
+public:
+  /* Constructor */
+  TmclInterpreter(uint16_t timeout_ms, uint8_t comm_exec_cmd_retries, 
+    std::vector<std::string> param_ap_name, std::vector<int> param_ap_type);
 
-    /* Destructor */
-    ~TmclInterpreter();
+  /* Destructor */
+  ~TmclInterpreter();
 
-    /* Reset interface */
-    bool resetInterface();
+  /* Reset interface */
+  bool resetInterface();
 
-    /* Execute command where type is a number */
-    bool executeCmd(tmcl_cmd_t cmd, uint8_t type, uint8_t motor, int32_t *val);
+  /* Execute command where type is a number */
+  bool executeCmd(tmcl_cmd_t cmd, uint8_t type, uint8_t motor, int32_t *val);
 
-    /* Execute command where type is a string(only available in ap_name_)*/
-    bool executeCmd(tmcl_cmd_t cmd, std::string type, uint8_t motor, int32_t *val);
+  /* Execute command where type is a string(only available in ap_name_)*/
+  bool executeCmd(tmcl_cmd_t cmd, std::string type, uint8_t motor, int32_t *val);
 
-    /* Shutdown interface */
-    bool shutdownInterface();
+  /* Shutdown interface */
+  bool shutdownInterface();
 
-    /* Getter b_retries_exceeded variable */
-    bool getRetriesExceededStatus();
+  /* Getter b_retries_exceeded variable */
+  bool getRetriesExceededStatus();
 
-    tmcl_interface_t tmcl_interface;
-    tmcl_cfg_t tmcl_cfg;
-    
-  private:
-    bool interface_enabled;
-    uint16_t timeout_ms;
-    uint8_t comm_exec_cmd_retries;
-    std::vector<std::string> param_ap_name;
-    std::vector<int> param_ap_type;
+  tmcl_interface_t tmcl_interface_;
+  tmcl_cfg_t tmcl_cfg_;
+  
+private:
+  bool interface_enabled_;
+  uint16_t timeout_ms_;
+  uint8_t comm_exec_cmd_retries_;
+  std::vector<std::string> param_ap_name_;
+  std::vector<int> param_ap_type_;
 
-    bool b_retries_exceeded;
+  bool b_retries_exceeded_;
 };
 
 #endif /* _TMCL_INTERPRETER_H */

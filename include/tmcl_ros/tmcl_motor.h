@@ -16,71 +16,77 @@
 
 /* Conversion constants */
 
-/* Derived from converting linear velocity (ROS velocity unit) to rpm (TMC board velocity unit)*/
-#define PI 3.1415926535
-#define SECS_TO_MIN 60
+/* Derived from converting linear velocity (ROS velocity unit) to rpm (TMC board velocity unit) */
+const double PI = 3.1415926535;
+const uint8_t SECS_TO_MIN = 60;
 
-/* Used for converting degrees (general position/angular unit) to steps (TMC board position/angular unit)*/
-#define ANGULAR_FULL_ROTATION 360
+/* Used for converting degrees (general position/angular unit) to steps (TMC board position/angular unit) */
+const uint16_t ANGULAR_FULL_ROTATION = 360;
 
 class Motor
 {
-  public:
-    /* Constructor */
-    Motor(ros::NodeHandle* p_nh, TmclInterpreter *p_tmcl_int, uint8_t motor_num);
+public:
+  /* Constructor */
+  Motor(ros::NodeHandle* p_nh, TmclInterpreter *p_tmcl_interpreter, 
+    uint16_t module_number, uint8_t motor_number);
 
-    /* Destructor */
-    virtual ~Motor();
+  /* Destructor */
+  virtual ~Motor();
 
-    virtual void init();
+  /* Initialize Motor */
+  virtual void init();
+      
+protected:
+  /* Publisher */
+  void initPublisher();
+  virtual void rosPublishTmcInfo(const ros::TimerEvent& event);
+  ros::Timer timer_callback_;
+  ros::Publisher tmc_info_pub_;
+  tmcl_ros::TmcInfo tmc_info_msg_;
+  float param_pub_rate_tmc_info_;
+  std::string param_tmc_info_topic_;
+  bool param_en_pub_tmc_info_;
+  uint32_t seq_ctr_;
 
-  private:
-    void initParams();
-        
-  protected:
-    /* Publisher */
-    void initPublisher();
-    virtual void rosPublishTmcInfo(const ros::TimerEvent& event);
-    ros::Timer timer_callback;
-    ros::Publisher tmc_info_pub;
-    tmcl_ros::TmcInfo tmc_info_msg;
-    float param_pub_rate_tmc_info;
-    std::string param_tmc_info_topic;
-    bool param_en_pub_tmc_info;
-    uint32_t seq_ctr;
+  /* Subscriber */
+  virtual void initSubscriber();
+  virtual void cmdVelCallback(const geometry_msgs::Twist& msg);
+  virtual void cmdAbsPosCallback(const std_msgs::Int32 msg);
+  virtual void cmdRelPosCallback(const std_msgs::Int32 msg);
+  virtual void cmdTrqCallback(const std_msgs::Int32 msg);
+  ros::Subscriber tmc_cmd_vel_sub_;
+  ros::Subscriber tmc_cmd_abspos_sub_;
+  ros::Subscriber tmc_cmd_relpos_sub_;
+  ros::Subscriber tmc_cmd_trq_sub_;
 
-    /* Subscriber */
-    virtual void initSubscriber();
-    ros::Subscriber tmc_cmd_vel_sub;
-    ros::Subscriber tmc_cmd_abspos_sub;
-    ros::Subscriber tmc_cmd_relpos_sub;
-    ros::Subscriber tmc_cmd_trq_sub;
-    virtual void cmdVelCallback(const geometry_msgs::Twist& msg);
-    virtual void cmdAbsPosCallback(const std_msgs::Int32 msg);
-    virtual void cmdRelPosCallback(const std_msgs::Int32 msg);
-    virtual void cmdTrqCallback(const std_msgs::Int32 msg);
+  /* Pointers */
+  ros::NodeHandle* p_nh_;
+  TmclInterpreter* p_tmcl_interpreter_;
 
-    /* Pointers */
-    ros::NodeHandle* p_nh_;
-    TmclInterpreter* p_tmcl_int;
+  /* Other Variables */
+  std::string param_comm_interface_name_;
+  std::string s_node_name_;
+  std::string s_namespace_;
+  std::string frame_id_;
+  uint16_t module_number_;
+  uint8_t motor_number_;
 
-    /* Other Variables */
-    std::string param_comm_interface_name;
-    std::string s_node_name;
-    uint8_t motor_num;
+  /* Motor Specific Settings (Ext YAML) */
+  std::string param_tmc_cmd_vel_topic_;
+  std::string param_tmc_cmd_abspos_topic_;
+  std::string param_tmc_cmd_relpos_topic_;
+  std::string param_tmc_cmd_trq_topic_;
+  bool param_pub_actual_vel_;
+  bool param_pub_actual_pos_;
+  bool param_pub_actual_trq_;
+  float param_wheel_diameter_;
+  float param_add_ratio_vel_;
+  float param_add_ratio_pos_;
+  float param_add_ratio_trq_;
 
-    /* Motor Specific Settings (Ext YAML) */
-    std::string param_tmc_cmd_vel_topic;
-    std::string param_tmc_cmd_abspos_topic;
-    std::string param_tmc_cmd_relpos_topic;
-    std::string param_tmc_cmd_trq_topic;
-    bool param_pub_actual_vel;
-    bool param_pub_actual_pos;
-    bool param_pub_actual_trq;
-    float param_wheel_diameter;
-    float param_add_ratio_vel;
-    float param_add_ratio_pos;
-    float param_add_ratio_trq;
+private:
+  /* Initialize Parameter for Motor Specific */
+  void initParams();
 };
 
 #endif // TMCL_MOTOR_H

@@ -9,6 +9,7 @@
 
 /* Globals */
 TmclROS *p_tmc = nullptr; 
+bool g_shutdown_signal = false;
 
 /* Function Prototypes */
 void graceful_shutdown();
@@ -34,7 +35,7 @@ void graceful_shutdown()
 void signal_callback_handler(int signum)
 {
   ROS_INFO_STREAM("> Caught signal: " << signum << ". Terminating...");
-  graceful_shutdown();
+  g_shutdown_signal = true;
 }
 
 /**
@@ -57,6 +58,8 @@ int main(int argc, char** argv)
   {
     ROS_INFO_STREAM("> Starting tmcl_ros ...");
     signal(SIGINT, signal_callback_handler);
+    signal(SIGTERM, signal_callback_handler);
+    signal(SIGKILL, signal_callback_handler);
   
     ROS_INFO_STREAM("> Initializing tmcl_ros ...");
     p_tmc = new TmclROS(&nh);
@@ -65,7 +68,7 @@ int main(int argc, char** argv)
     if(p_tmc->init())
     {
       ROS_INFO_STREAM("> Successfully initialized TMCL Protocol Interpreter.\n\n");
-      while(nh.ok() && !p_tmc->getRetriesExceededStatus())
+      while(!g_shutdown_signal && nh.ok() && !p_tmc->getRetriesExceededStatus())
       {
         ros::spinOnce();
       }

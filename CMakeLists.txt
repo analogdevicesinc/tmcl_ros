@@ -125,7 +125,7 @@ include_directories(
 #add_definitions(-DDEBUG)
 
 ## Declare a C++ library
-add_library(socket_can_wrapper src/socket_can_wrapper.cpp)
+add_library(${PROJECT_NAME}_socket_can_wrapper src/socket_can_wrapper.cpp)
 add_library(tmcl_interpreter src/tmcl_interpreter.cpp)
 add_library(tmcl_ros src/tmcl_ros.cpp)
 add_library(tmcl_motor src/tmcl_motor.cpp)
@@ -158,7 +158,7 @@ add_executable(${PROJECT_NAME}_node src/tmcl_ros_node.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(tmcl_interpreter socket_can_wrapper)
+target_link_libraries(tmcl_interpreter ${PROJECT_NAME}_socket_can_wrapper)
 target_link_libraries(tmcl_ros tmcl_interpreter)
 target_link_libraries(tmcl_ros tmcl_motor)
 target_link_libraries(tmcl_interpreter tmcl_motor)
