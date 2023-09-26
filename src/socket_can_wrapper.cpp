@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Analog Devices, Inc. All Rights Reserved.
+ * Copyright (c) 2022-2023 Analog Devices, Inc. All Rights Reserved.
  * This software is proprietary to Analog Devices, Inc. and its licensors.
  **/
 

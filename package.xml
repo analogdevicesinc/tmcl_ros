@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>tmcl_ros</name>
-  <version>1.0.0</version>
+  <version>3.0.1</version>
   <description>The tmcl_ros package</description>
 
   <maintainer email="ROS@analog.com">ROS@analog.com</maintainer>
