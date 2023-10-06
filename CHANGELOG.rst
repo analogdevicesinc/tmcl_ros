@@ -2,8 +2,8 @@
 Changelog for package tmcl_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+3.0.2 (2023-10-06)
+------------------
 * Removed obsolete modules and updated analog.com references in README
 * Updated to:
 
