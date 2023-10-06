@@ -54,7 +54,7 @@ catkin_package(
   LIBRARIES
     tmcl_ros
     tmcl_interpreter
-    socket_can_wrapper
+    ${PROJECT_NAME}_socket_can_wrapper
     tmcl_motor
     tmcl_bldc_motor
     tmcl_stepper_motor
@@ -107,7 +107,54 @@ add_dependencies(tmcl_ros_node tmcl_ros_generate_messages_cpp)
 ## Install ##
 #############
 
-# None
+## Mark executables for installation
+install(TARGETS tmcl_ros_node
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+## Mark libaries for installation
+install(TARGETS
+  ${PROJECT_NAME}_socket_can_wrapper
+  tmcl_interpreter
+  tmcl_ros
+  tmcl_motor
+  tmcl_bldc_motor
+  tmcl_stepper_motor
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+)
+
+## Mark cpp header files for installation
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h"
+  PATTERN ".svn" EXCLUDE
+)
+
+## Mark other files for installation (e.g. launch and bag files, etc.)
+install(DIRECTORY
+  launch/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
+  FILES_MATCHING PATTERN "*.launch"
+)
+
+install(DIRECTORY
+  config/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config
+  FILES_MATCHING PATTERN "*.yaml"
+)
+
+install(DIRECTORY
+  scripts/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/scripts
+  FILES_MATCHING PATTERN "*.sh"
+)
+
+install(FILES
+  LICENSE
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 
 #############
 ## Testing ##
