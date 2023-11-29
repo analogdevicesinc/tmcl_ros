@@ -9,7 +9,7 @@
 #include "tmcl_interpreter.h"
 #include <ros/ros.h>
 #include <ros/console.h>
-#include "tmcl_ros/TmcInfo.h"
+#include "adi_tmcl/TmcInfo.h"
 #include "geometry_msgs/Twist.h"
 #include "std_msgs/Int32.h"
 #include "std_msgs/String.h"
@@ -42,7 +42,7 @@ protected:
   virtual void rosPublishTmcInfo(const ros::TimerEvent& event);
   ros::Timer timer_callback_;
   ros::Publisher tmc_info_pub_;
-  tmcl_ros::TmcInfo tmc_info_msg_;
+  adi_tmcl::TmcInfo tmc_info_msg_;
   float param_pub_rate_tmc_info_;
   std::string param_tmc_info_topic_;
   bool param_en_pub_tmc_info_;

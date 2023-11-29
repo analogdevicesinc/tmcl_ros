@@ -53,7 +53,7 @@ adhoc_mode: false
 # Possible values:
 # - 0: Not used
 # - 1: Active
-en_motors: [1,1,1,1,1,1,1,1,1]
+en_motors: []
 
 # Publish rate of TMC information
 # Decription: Publish rate (hertz) of TMC information
@@ -71,67 +71,3 @@ auto_start_additional_delay: 0
 # copy and paste all the configuration per motor, configure the needed topic names, wheel diameter values and
 # generic ratios, and rename the motor name (should follow motor naming below - motor0, motor1, ..., motorn)
 # otherwise, the node will fail.
-
-motor0:
-  en_pub_tmc_info: true
-  pub_actual_vel: true
-  pub_actual_pos: true
-  pub_actual_trq: true
-  tmc_info_topic: "/tmc_info_0"
-  tmc_cmd_vel_topic: "/cmd_vel_0"
-  tmc_cmd_abspos_topic: "/cmd_abspos_0"
-  tmc_cmd_relpos_topic: "/cmd_relpos_0"
-  tmc_cmd_trq_topic: "/cmd_trq_0"
-
-  wheel_diameter: 0.25
-  additional_ratio_vel: 1
-  additional_ratio_pos: 1
-  additional_ratio_trq: 1
-
-motor1:
-  en_pub_tmc_info: true
-  pub_actual_vel: true
-  pub_actual_pos: true
-  pub_actual_trq: true
-  tmc_info_topic: "/tmc_info_1"
-  tmc_cmd_vel_topic: "/cmd_vel_1"
-  tmc_cmd_abspos_topic: "/cmd_abspos_1"
-  tmc_cmd_relpos_topic: "/cmd_relpos_1"
-  tmc_cmd_trq_topic: "/cmd_trq_1"
-
-  wheel_diameter: 0.25
-  additional_ratio_vel: 1
-  additional_ratio_pos: 1
-  additional_ratio_trq: 1
-
-motor2:
-  en_pub_tmc_info: true
-  pub_actual_vel: true
-  pub_actual_pos: true
-  pub_actual_trq: true
-  tmc_info_topic: "/tmc_info_2"
-  tmc_cmd_vel_topic: "/cmd_vel_2"
-  tmc_cmd_abspos_topic: "/cmd_abspos_2"
-  tmc_cmd_relpos_topic: "/cmd_relpos_2"
-  tmc_cmd_trq_topic: "/cmd_trq_2"
-
-  wheel_diameter: 0.25
-  additional_ratio_vel: 1
-  additional_ratio_pos: 1
-  additional_ratio_trq: 1
-
-motor3:
-  en_pub_tmc_info: true
-  pub_actual_vel: true
-  pub_actual_pos: true
-  pub_actual_trq: true
-  tmc_info_topic: "/tmc_info_3"
-  tmc_cmd_vel_topic: "/cmd_vel_3"
-  tmc_cmd_abspos_topic: "/cmd_abspos_3"
-  tmc_cmd_relpos_topic: "/cmd_relpos_3"
-  tmc_cmd_trq_topic: "/cmd_trq_3"
-
-  wheel_diameter: 0.25
-  additional_ratio_vel: 1
-  additional_ratio_pos: 1
-  additional_ratio_trq: 1

@@ -10,9 +10,9 @@
 #include "tmcl_motor.h"
 #include "tmcl_bldc_motor.h"
 #include "tmcl_stepper_motor.h"
-#include "tmcl_ros/TmcParam.h"
-#include "tmcl_ros/TmcCustomCmd.h"
-#include "tmcl_ros/TmcGapGgpAll.h"
+#include "adi_tmcl/TmcParam.h"
+#include "adi_tmcl/TmcCustomCmd.h"
+#include "adi_tmcl/TmcGapGgpAll.h"
 #include "std_msgs/Int32.h"
 #include "std_msgs/String.h"
 
@@ -61,9 +61,9 @@ private:
   void initService();
 
   /* ROS Services */
-  bool tmclCustomCMDCallBack(tmcl_ros::TmcCustomCmd::Request& req, tmcl_ros::TmcCustomCmd::Response& res);
-  bool tmclGAPAllCallBack(tmcl_ros::TmcGapGgpAll::Request& req, tmcl_ros::TmcGapGgpAll::Response& res);
-  bool tmclGGPAllCallBack(tmcl_ros::TmcGapGgpAll::Request& req, tmcl_ros::TmcGapGgpAll::Response& res);
+  bool tmclCustomCMDCallBack(adi_tmcl::TmcCustomCmd::Request& req, adi_tmcl::TmcCustomCmd::Response& res);
+  bool tmclGAPAllCallBack(adi_tmcl::TmcGapGgpAll::Request& req, adi_tmcl::TmcGapGgpAll::Response& res);
+  bool tmclGGPAllCallBack(adi_tmcl::TmcGapGgpAll::Request& req, adi_tmcl::TmcGapGgpAll::Response& res);
   ros::ServiceServer custom_cmd_server_;
   ros::ServiceServer gap_all_server_;
   ros::ServiceServer ggp_all_server_;
@@ -99,7 +99,7 @@ private:
   bool param_adhoc_mode_;
   std::vector<int> param_en_motors_;
 
-  tmcl_ros::TmcParam tmc_param_msg_;
+  adi_tmcl::TmcParam tmc_param_msg_;
 };
 
 #endif // TMCL_ROS_H

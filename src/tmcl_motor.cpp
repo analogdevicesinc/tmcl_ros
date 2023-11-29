@@ -184,7 +184,7 @@ void Motor::initPublisher()
 
   if(param_en_pub_tmc_info_)
   {
-    tmc_info_pub_ = p_nh_->advertise<tmcl_ros::TmcInfo>(param_tmc_info_topic_, 100);
+    tmc_info_pub_ = p_nh_->advertise<adi_tmcl::TmcInfo>(param_tmc_info_topic_, 100);
     seq_ctr_ = 0;
     ros::Rate period(param_pub_rate_tmc_info_);
     timer_callback_ = p_nh_->createTimer(ros::Duration(period), &Motor::rosPublishTmcInfo, this);

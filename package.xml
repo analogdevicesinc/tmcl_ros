@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>tmcl_ros</name>
+  <name>adi_tmcl</name>
   <version>3.0.2</version>
-  <description>The tmcl_ros package</description>
+  <description>The adi_tmcl ROS package</description>
 
   <maintainer email="ROS@analog.com">ROS@analog.com</maintainer>
 

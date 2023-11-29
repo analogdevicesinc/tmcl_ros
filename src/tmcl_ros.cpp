@@ -493,7 +493,7 @@ void TmclROS::initService()
 }
 
 /* ROS Service Callbacks */
-bool TmclROS::tmclCustomCMDCallBack(tmcl_ros::TmcCustomCmd::Request& req, tmcl_ros::TmcCustomCmd::Response& res)
+bool TmclROS::tmclCustomCMDCallBack(adi_tmcl::TmcCustomCmd::Request& req, adi_tmcl::TmcCustomCmd::Response& res)
 {
   bool b_result = false;
   int32_t val = 0;
@@ -562,7 +562,7 @@ bool TmclROS::tmclCustomCMDCallBack(tmcl_ros::TmcCustomCmd::Request& req, tmcl_r
 
   return b_result;
 }
-bool TmclROS::tmclGAPAllCallBack(tmcl_ros::TmcGapGgpAll::Request& req, tmcl_ros::TmcGapGgpAll::Response& res)
+bool TmclROS::tmclGAPAllCallBack(adi_tmcl::TmcGapGgpAll::Request& req, adi_tmcl::TmcGapGgpAll::Response& res)
 {
   bool b_result = true;
   int32_t val = 0;
@@ -596,7 +596,7 @@ bool TmclROS::tmclGAPAllCallBack(tmcl_ros::TmcGapGgpAll::Request& req, tmcl_ros:
 
   return b_result;
 }
-bool TmclROS::tmclGGPAllCallBack(tmcl_ros::TmcGapGgpAll::Request& req, tmcl_ros::TmcGapGgpAll::Response& res)
+bool TmclROS::tmclGGPAllCallBack(adi_tmcl::TmcGapGgpAll::Request& req, adi_tmcl::TmcGapGgpAll::Response& res)
 {
   bool b_result = true;
   int32_t val = 0;

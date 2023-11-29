@@ -1,6 +1,6 @@
-| tmcl_ros |
+| adi_tmcl |
 | --- |
-Official ROS Driver for Trinamic Motor Controllers (TMC) that uses Trinamic Motion Control Language (TMCL) protocol. |
+Official ROS Driver for ADI Trinamic Motor Controllers (TMC) that uses Trinamic Motion Control Language (TMCL) protocol. |
 
 # Background
 - Supported TMC boards: [TMCM-1636](https://www.analog.com/en/products/tmcm-1636.html), [TMCM-1617](https://www.analog.com/en/products/tmcm-1617.html), [TMCM-1241](https://www.analog.com/en/products/tmcm-1241.html), [TMCM-1260](https://www.analog.com/en/products/tmcm-1260.html), [TMCM-6214](https://www.analog.com/en/products/tmcm-6214.html)
@@ -53,8 +53,8 @@ In the website:
 In a terminal, do the following:
 ```bash
 $ cd ~/catkin_ws/src
-$ git clone <copied SSH o HTTPS link here>
-$ mv <directory created by the above command> tmcl_ros #renames the cloned repo to "tmcl_ros"
+# Clone to directory "adi_tmcl" which is the package name
+$ git clone <copied SSH o HTTPS link here> adi_tmcl
 ```
 
 # Build
@@ -114,7 +114,7 @@ For more information about Trinamic features on stepper motors, visit this [link
 
 To proceed, first make the script executable (do this only once as this change persists even after power-off):
 ```bash
-$ cd ~/catkin_ws/src/tmcl_ros/scripts
+$ cd ~/catkin_ws/src/adi_tmcl/scripts # or $ cd ~/catkin_ws/src/<repo directory>/scripts
 $ chmod +x CAN_init.sh
 ```
 
@@ -139,7 +139,7 @@ $ sudo ./CAN_init.sh 0 1000000
 
 To proceed, first make the script executable (do this only once as this change persists even after power-off):
 ```bash
-$ cd ~/catkin_ws/src/tmcl_ros/scripts
+$ cd ~/catkin_ws/src/adi_tmcl/scripts # or $ cd ~/catkin_ws/src/<repo directory>/scripts
 $ chmod +x CAN_deinit.sh
 ```
 
@@ -157,7 +157,7 @@ $ sudo ./CAN_deinit.sh 0
 
 # Launch
 ```bash
-$ roslaunch tmcl_ros tmcm_1636.launch
+$ roslaunch adi_tmcl tmcm_1636.launch
 ```
 
 # Nodes
@@ -278,7 +278,7 @@ To proceed with the test, execute these following commands on three (3) differen
 
 | Terminal 1 | Terminal 2  | Terminal 3|
 --- | --- | ---|
-| <pre>$ cd ~/catkin_ws/ <br>$ source /opt/ros/noetic/setup.bash <br>$ source devel/setup.bash <br>$ roslaunch tmcm_1636.launch | <pre>$ cd ~/catkin_ws/ <br>$ source /opt/ros/noetic/setup.bash <br>$ source devel/setup.bash <br>$ rostopic echo /tmcm1/tmc_info_0 | <pre>$ cd ~/catkin_ws/src/tmcl_ros/scripts <br>$ sudo chmod 777 fake_cmd_vel.sh <br>$ ./fake_cmd_vel.sh |
+| <pre>$ cd ~/catkin_ws/ <br>$ source /opt/ros/noetic/setup.bash <br>$ source devel/setup.bash <br>$ roslaunch adi_tmcl tmcm_1636.launch | <pre>$ cd ~/catkin_ws/ <br>$ source /opt/ros/noetic/setup.bash <br>$ source devel/setup.bash <br>$ rostopic echo /tmcm1/tmc_info_0 | <pre>$ cd ~/catkin_ws/src/adi_tmcl/scripts <br>$ sudo chmod 777 fake_cmd_vel.sh <br>$ ./fake_cmd_vel.sh |
 
 **Monitor the velocity of the first motor (watch out for velocity value at Terminal 2).**
 
@@ -300,7 +300,7 @@ To proceed with the test, execute these following commands on three (3) differen
 
 | Terminal 1 | Terminal 2  | Terminal 3|
 --- | --- | ---|
-|<pre>$ cd ~/catkin_ws/ <br>$ source /opt/ros/noetic/setup.bash <br>$ source devel/setup.bash <br>$ roslaunch tmcm_1636.launch  | <pre>$ cd ~/catkin_ws/ <br>$ source /opt/ros/noetic/setup.bash <br>$ source devel/setup.bash <br>$ rostopic echo /tmcm1/tmc_info_0 | <pre>$ cd ~/catkin_ws/src/tmcl_ros/scripts <br>$ sudo chmod 777 fake_cmd_pos.sh <br>$ ./fake_cmd_pos.sh |
+|<pre>$ cd ~/catkin_ws/ <br>$ source /opt/ros/noetic/setup.bash <br>$ source devel/setup.bash <br>$ roslaunch adi_tmcl tmcm_1636.launch  | <pre>$ cd ~/catkin_ws/ <br>$ source /opt/ros/noetic/setup.bash <br>$ source devel/setup.bash <br>$ rostopic echo /tmcm1/tmc_info_0 | <pre>$ cd ~/catkin_ws/src/adi_tmcl/scripts <br>$ sudo chmod 777 fake_cmd_pos.sh <br>$ ./fake_cmd_pos.sh |
 
 **Monitor the position of the first motor (watch out for position value at Terminal 2).**
 
@@ -321,7 +321,7 @@ To proceed with the test, execute these following commands on three (3) differen
 
 | Terminal 1 | Terminal 2  | Terminal 3|
 --- | --- | ---|
-|<pre>$ cd ~/catkin_ws/ <br>$ source /opt/ros/noetic/setup.bash <br>$ source devel/setup.bash <br>$ roslaunch tmcm_1636.launch  | <pre>$ cd ~/catkin_ws/ <br>$ source /opt/ros/noetic/setup.bash <br>$ source devel/setup.bash <br>$ rostopic echo /tmcm1/tmc_info_0 | <pre>$ cd ~/catkin_ws/src/tmcl_ros/scripts <br>$ sudo chmod 777 fake_cmd_trq.sh <br>$ ./fake_cmd_trq.sh |
+|<pre>$ cd ~/catkin_ws/ <br>$ source /opt/ros/noetic/setup.bash <br>$ source devel/setup.bash <br>$ roslaunch adi_tmcl tmcm_1636.launch  | <pre>$ cd ~/catkin_ws/ <br>$ source /opt/ros/noetic/setup.bash <br>$ source devel/setup.bash <br>$ rostopic echo /tmcm1/tmc_info_0 | <pre>$ cd ~/catkin_ws/src/adi_tmcl/scripts <br>$ sudo chmod 777 fake_cmd_trq.sh <br>$ ./fake_cmd_trq.sh |
 
 **Monitor the torque of the first motor (watch out for torque value at Terminal 2).**
 

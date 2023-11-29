@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(tmcl_ros)
+project(adi_tmcl)
 
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS
@@ -80,16 +80,16 @@ add_library(tmcl_motor src/tmcl_motor.cpp)
 add_library(tmcl_bldc_motor src/tmcl_bldc_motor.cpp)
 add_library(tmcl_stepper_motor src/tmcl_stepper_motor.cpp)
 
-add_dependencies(tmcl_ros tmcl_ros_generate_messages_cpp)
-add_dependencies(tmcl_motor tmcl_ros_generate_messages_cpp)
-add_dependencies(tmcl_bldc_motor tmcl_ros_generate_messages_cpp)
-add_dependencies(tmcl_stepper_motor tmcl_ros_generate_messages_cpp)
+add_dependencies(tmcl_ros ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(tmcl_motor ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(tmcl_bldc_motor ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(tmcl_stepper_motor ${PROJECT_NAME}_generate_messages_cpp)
 
 ## Add cmake target dependencies of the library
-add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(tmcl_ros ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-add_executable(${PROJECT_NAME}_node src/tmcl_ros_node.cpp)
+add_executable(tmcl_ros_node src/tmcl_ros_node.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(tmcl_interpreter ${PROJECT_NAME}_socket_can_wrapper)
@@ -101,7 +101,7 @@ target_link_libraries(tmcl_motor tmcl_stepper_motor)
 target_link_libraries(tmcl_ros_node tmcl_ros ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the executable
-add_dependencies(tmcl_ros_node tmcl_ros_generate_messages_cpp)
+add_dependencies(tmcl_ros_node ${PROJECT_NAME}_generate_messages_cpp)
 
 #############
 ## Install ##
