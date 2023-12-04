@@ -1,9 +1,6 @@
 # adi_tmcl
 
-Official ROS Driver for ADI Trinamic Motor Controllers (TMC) that uses Trinamic Motion Control Language (TMCL) protocol.
-
-> [!IMPORTANT]
-> _Previous package name was ```tmcl_ros```_
+**adi_tmcl** (previously *tmcl_ros*) is the official ROS Driver for ADI Trinamic Motor Controllers (TMC) that uses Trinamic Motion Control Language (TMCL) protocol.
 
 
 # Background
