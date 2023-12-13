@@ -2,6 +2,15 @@
 Changelog for package tmcl_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Updated README.md to mention both tmcl_ros (previous package name) and adi_tmcl
+* Updated package name and transforms
+
+  - Updated package name in compliance to official ROS release, and updated transforms for multi-axes TMCs
+
+* Contributors: mmaralit-adi, jmacagba
+
 3.0.2 (2023-10-06)
 ------------------
 * Removed obsolete modules and updated analog.com references in README
