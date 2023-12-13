@@ -2,8 +2,8 @@
 Changelog for package tmcl_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+4.0.0 (2023-12-13)
+------------------
 * Updated README.md to mention both tmcl_ros (previous package name) and adi_tmcl
 * Updated package name and transforms
 
