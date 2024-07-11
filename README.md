@@ -4,7 +4,7 @@
 
 
 # Background
-- Supported TMC boards: [TMCM-1636](https://www.analog.com/en/products/tmcm-1636.html), [TMCM-1617](https://www.analog.com/en/products/tmcm-1617.html), [TMCM-1241](https://www.analog.com/en/products/tmcm-1241.html), [TMCM-1260](https://www.analog.com/en/products/tmcm-1260.html), [TMCM-6214](https://www.analog.com/en/products/tmcm-6214.html)
+- Supported TMC boards: [TMCM-1636](https://www.analog.com/en/products/tmcm-1636.html), [TMCM-1617](https://www.analog.com/en/products/tmcm-1617.html), [TMCM-2611](https://www.analog.com/en/products/tmcm-2611.html), [TMCM-1241](https://www.analog.com/en/products/tmcm-1241.html), [TMCM-1260](https://www.analog.com/en/products/tmcm-1260.html), [TMCM-6214](https://www.analog.com/en/products/tmcm-6214.html)
 - Supported communication interface and interface driver: CAN (SocketCAN)
 - Supported ROS and OS distro: Noetic (Ubuntu 20.04)
 - Supported platform: Intel x86 64-bit (amd64)
