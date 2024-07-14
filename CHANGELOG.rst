@@ -2,8 +2,8 @@
 Changelog for package tmcl_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+4.0.1 (2024-07-15)
+------------------
 * Merge branch 'noetic' of https://github.com/analogdevicesinc/tmcl_ros into noetic
 * Added support for TMCM-2611
   Co-Authored-By: Christian Joseph Acar <124771470+CAcarADI@users.noreply.github.com>

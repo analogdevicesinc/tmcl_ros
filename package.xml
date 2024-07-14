@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>adi_tmcl</name>
-  <version>4.0.0</version>
+  <version>4.0.1</version>
   <description>The adi_tmcl ROS package</description>
 
   <maintainer email="ROS@analog.com">ROS@analog.com</maintainer>
