@@ -2,6 +2,12 @@
 Changelog for package tmcl_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Added support for TMCM-1316.
+  Rename Maintainer name in package.xml
+* Contributors: CAcarADI, jmacagba
+
 4.0.1 (2024-07-15)
 ------------------
 * Merge branch 'noetic' of https://github.com/analogdevicesinc/tmcl_ros into noetic
