@@ -2,8 +2,8 @@
 Changelog for package tmcl_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+4.0.2 (2024-11-11)
+------------------
 * Added support for TMCM-1316.
   Rename Maintainer name in package.xml
 * Contributors: CAcarADI, jmacagba
