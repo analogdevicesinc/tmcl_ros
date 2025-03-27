@@ -4,13 +4,45 @@
 
 
 # Background
-- Supported TMC boards: [TMCM-1636](https://www.analog.com/en/products/tmcm-1636.html), [TMCM-1617](https://www.analog.com/en/products/tmcm-1617.html), [TMCM-2611](https://www.analog.com/en/products/tmcm-2611.html), [TMCM-1241](https://www.analog.com/en/products/tmcm-1241.html), [TMCM-1260](https://www.analog.com/en/products/tmcm-1260.html), [TMCM-6214](https://www.analog.com/en/products/tmcm-6214.html)
+- Supported TMC boards: 
+    - [TMCM-343](https://www.analog.com/en/products/tmcm-343.html), 
+    - [TMCM-351](https://www.analog.com/en/products/tmcm-351.html),
+    - [TMCM-0930](https://www.analog.com/en/products/tmcm-0930.html), 
+    - [TMCM-1140](https://www.analog.com/en/products/tmcm-1140.html), [PD-1140](https://www.analog.com/en/products/pd-1140.html),
+    - [TMCM-1160](https://www.analog.com/en/products/tmcm-1160.html), [PD-1160](https://www.analog.com/en/products/pd-1160.html),
+    - [TMCM-1180](https://www.analog.com/en/products/tmcm-1180.html), [PD-1180](https://www.analog.com/en/products/pd-1180.html),
+    - [TMCM-1230](https://www.analog.com/en/products/tmcm-1230.html), 
+    - [TMCM-1231](https://www.analog.com/en/products/tmcm-1231.html),
+    - [TMCM-1240](https://www.analog.com/en/products/tmcm-1240.html), 
+    - [TMCM-1241 *](https://www.analog.com/en/products/tmcm-1241.html), [PD-1241 *](https://www.analog.com/en/products/pd-1241.html),
+    - [TMCM-1260 *](https://www.analog.com/en/products/tmcm-1260.html), [PD-1260 *](https://www.analog.com/en/products/pd-1260.html),
+    - [TMCM-1270](https://www.analog.com/en/products/tmcm-1270.html), [PD-1270](https://www.analog.com/en/products/pd-1270.html),
+    - [TMCM-1276](https://www.analog.com/en/products/tmcm-1276.html), [PD-1276](https://www.analog.com/en/products/pd-1276.html),
+    - [TMCM-1278](https://www.analog.com/en/products/tmcm-1278.html), [PD-1278](https://www.analog.com/en/products/pd-1278.html),
+    - [TMCM-1311](https://www.analog.com/en/products/tmcm-1311.html), 
+    - [TMCM-1316](https://www.analog.com/en/products/tmcm-1316.html), 
+    - [PD-1378](https://www.analog.com/en/products/pd-1378.html),
+    - [TMCM-1617 *](https://www.analog.com/en/products/tmcm-1617.html), 
+    - [TMCM-1633](https://www.analog.com/en/products/tmcm-1633.html), 
+    - [TMCM-1636 *](https://www.analog.com/en/products/tmcm-1636.html),
+    - [TMCM-1637](https://www.analog.com/en/products/tmcm-1637.html), 
+    - [TMCM-1638](https://www.analog.com/en/products/tmcm-1638.html), 
+    - [PD-1670](https://www.analog.com/en/products/pd-1670.html),
+    - [TMCM-2611 *](https://www.analog.com/en/products/tmcm-2611.html), 
+    - [TMCM-3110](https://www.analog.com/en/products/tmcm-3110.html), 
+    - [TMCM-3212](https://www.analog.com/en/products/tmcm-3212.html), 
+    - [TMCM-3230](https://www.analog.com/en/products/tmcm-3230.html),
+    - [TMCM-3351](https://www.analog.com/en/products/tmcm-3351.html), 
+    - [TMCM-6110](https://www.analog.com/en/products/tmcm-6110.html), 
+    - [TMCM-6212](https://www.analog.com/en/products/tmcm-6212.html),
+    - [TMCM-6214 *](https://www.analog.com/en/products/tmcm-6214.html)
 - Supported communication interface and interface driver: CAN (SocketCAN)
 - Supported ROS and OS distro: Noetic (Ubuntu 20.04)
 - Supported platform: Intel x86 64-bit (amd64)
 - Supported setup: Single/Multiple TMC in Single/Multiple CAN channel (namespace-managed)
 
-> :memo: _Note: Although officially supported TMC boards are only the abovementioned, all market-ready TMCs with YAMLs in this repository are also expected to work and can be tried and tested by the users._
+> :memo: _Note: Tested boards are marked with asterisk(*)._
+> _PD stands for PanDrive, which combines the motor and the Trinamic board in a single package. TMCM files in this ROS package should also be compatible with the PD version of the hardware._
 > _Contact the Developers for any  issues encountered._
 
 # Hardware
